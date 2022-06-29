@@ -16,8 +16,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-layout {
-	display: grid;
-	grid-template-columns: 1fr 1260px 1fr;
-}
+// .app-layout {
+// 	display: grid;
+// 	grid-template-columns: 1fr 1260px 1fr;
+// }
+// .main-layout {
+// 	grid-column: 2;
+// }
 </style>
