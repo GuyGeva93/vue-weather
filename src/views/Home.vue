@@ -2,10 +2,10 @@
   <v-container>
     <CitySearch />
     <v-row>
-      <v-col cols="12" md="4"><h3>Tel Aviv</h3></v-col>
+      <v-col cols="12" md="4"><h2>Tel Aviv</h2></v-col>
       <v-spacer md="4"></v-spacer>
       <v-col cols="12" md="4" class="d-flex justify-end"
-        ><h3>Add To Favorites</h3></v-col
+        ><h2>Add To Favorites</h2></v-col
       >
     </v-row>
     <v-sheet
@@ -14,7 +14,6 @@
       Sunny
     </v-sheet>
     <CityForecast :telaviv="telaviv" />
-    <v-autocomplete></v-autocomplete>
   </v-container>
 </template>
 
@@ -35,6 +34,7 @@ export default {
   data() {
     return {
       telaviv: null,
+      items: null,
     };
   },
 };
