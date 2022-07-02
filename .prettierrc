@@ -1,7 +1,7 @@
 {
-  "useTabs": false,
-  "endOfLine": "lf",
+  "htmlWhitespaceSensitivity": "ignore",
+  "endOfLine": "auto",
   "semi": true,
   "singleQuote": true,
-  "bracketSameLine": true
+  "jsxBracketSameLine": false
 }

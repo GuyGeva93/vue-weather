@@ -7,7 +7,8 @@
         v-debounce="search"
         :loading="isLoading"
         :label="'Search for a place..'"
-        :items="items"></v-autocomplete>
+        :items="items"
+      ></v-autocomplete>
     </v-col>
     <v-spacer></v-spacer>
   </v-row>
@@ -18,7 +19,7 @@ import { weatherService } from '@/services/weather-service';
 export default {
   data() {
     return {
-      cities: null,
+      locations: null,
       items: null,
       isLoading: false,
       query: null,
@@ -26,17 +27,14 @@ export default {
   },
   methods: {
     async search(query) {
-      this.cities = await weatherService.autoComplete(query);
-      this.items = this.cities.map((city) => {
+      this.locations = await weatherService.autoComplete(query);
+      this.items = this.locations.map((city) => {
         const item = {
           text: Object.keys(city),
           value: Object.values(city),
         };
         return item;
       });
-      // this.items = this.cities.map((city) => {
-      //   return city.cityName;
-      // });
       this.isLoading = false;
     },
     async getWeather() {
@@ -44,11 +42,13 @@ export default {
       console.log('cityCode', cityCode);
     },
   },
-  // watch: {
-  //   query(val) {
-
-  // 	},
-  // },
+  watch: {
+    async query(locationCode) {
+      console.log('query (watch) val - ', locationCode);
+      this.$store.dispatch('fetchWeather', { locationCode });
+      const weather = weatherService.getFiveDayForecast(locationCode);
+    },
+  },
 };
 </script>
 
