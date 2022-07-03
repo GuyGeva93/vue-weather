@@ -1,7 +1,7 @@
 import { apiKey } from '@/assets/api-key';
 import { storageService } from './storage-service';
 const axios = require('axios');
-const DEFAULT_URL = 'http://dataservice.accuweather.com';
+const DEFAULT_URL = 'https://dataservice.accuweather.com';
 const TELAVIV_CODE = '215854';
 
 export const weatherService = {
