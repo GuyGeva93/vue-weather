@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex justify-space-between">
     <v-card
-      v-for="day in telaviv"
+      v-for="day in locationWeather"
       :key="day.EpochDate"
       class="card text-center">
       <v-card-title class="justify-center">{{
@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    telaviv: {
+    locationWeather: {
       type: Array,
       default: null,
       require: false,
@@ -60,6 +60,11 @@ export default {
       ],
     };
   },
+	computed: {
+		weather() {
+			return this.data 
+		}
+	},
 };
 </script>
 

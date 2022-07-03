@@ -8,23 +8,44 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currLocationWeather: null,
-    favorites: []
+    // locationName: null,
+    favorites: null
   },
   getters: {
-    getFavorites({ favorites }) { return favorites }
+    currLocation({ currLocationWeather }) { return currLocationWeather },
+    // locationName({locationName}){return locationName},
+    favorites({ favorites }) { return favorites }
   },
   mutations: {
-    setCurrLocation({ state }, weather) {
+    setCurrLocation(state, weather) {
       state.currLocationWeather = weather;
     },
-    addFavorite({ state }, newFavorite) {
+    addFavorite(state, newFavorite) {
       state.favorites.push(newFavorite)
+    },
+    setLocationName(state, locationName) {
+      state.locationName = locationName;
     }
   },
   actions: {
-    async fetchWeather({ commit }, { locationCode }) {
+    async getDefaultWeather({ commit }) {
       try {
-        const weather = await weatherService.getFiveDayForecast(locationCode);
+        const defaultWeather = await weatherService.getFiveDayForecast();
+        // commit('setLocationName', defaultWeather[0].LocationName);
+        commit('setCurrLocation', defaultWeather);
+        return defaultWeather;
+      } catch (e) {
+        console.log('Error =>', e);
+      }
+    },
+    async fetchWeather({ commit }, { locationCode, locationName }) {
+      try {
+        if (!locationCode || !locationName) {
+          const defWeather = await weatherService.getFiveDayForecast();
+          commit('setCurrLocation', defWeather)
+          return;
+        }
+        const weather = await weatherService.getFiveDayForecast(locationCode, locationName);
         commit('setCurrLocation', weather)
       } catch (e) {
         console.log('Error =>', e);

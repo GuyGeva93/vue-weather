@@ -45,8 +45,11 @@ export default {
   watch: {
     async query(locationCode) {
       console.log('query (watch) val - ', locationCode);
-      this.$store.dispatch('fetchWeather', { locationCode });
-      const weather = weatherService.getFiveDayForecast(locationCode);
+      const weather = this.$store.dispatch('fetchWeather', {
+        locationCode,
+        locationName: this.query,
+      });
+      this.$emit('locationSelected', weather);
     },
   },
 };
