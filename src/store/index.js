@@ -8,12 +8,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currLocationWeather: null,
-    // locationName: null,
-    favorites: null
+    favorites: []
   },
   getters: {
     currLocation({ currLocationWeather }) { return currLocationWeather },
-    // locationName({locationName}){return locationName},
     favorites({ favorites }) { return favorites }
   },
   mutations: {
@@ -25,6 +23,14 @@ export default new Vuex.Store({
     },
     setLocationName(state, locationName) {
       state.locationName = locationName;
+    },
+    isFavorites(state, locationCode) {
+      if (!state.favorites) return false
+      const idx = state.favorites.findIndex(favorite => {
+        return favorite.LocationCode === locationCode
+      })
+      if (idx < 0) return false;
+      return true;
     }
   },
   actions: {

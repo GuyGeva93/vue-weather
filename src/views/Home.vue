@@ -7,7 +7,12 @@
       </v-col>
       <v-spacer md="4"></v-spacer>
       <v-col cols="12" md="4" class="d-flex justify-end">
-        <h2>Add To Favorites</h2>
+        <v-btn @click.stop="favorites" depressed v-if="isFavorites">
+          Remove From Favorites
+        </v-btn>
+        <v-btn @click.stop="favorites" color="primary" v-else>
+          Add To Favorites
+        </v-btn>
       </v-col>
     </v-row>
     <v-sheet
@@ -44,6 +49,14 @@ export default {
     },
     locationName() {
       return this.$store.getters.locationName;
+    },
+    isFavorites() {
+      return this.$store.commit('isFavorites');
+    },
+  },
+  methods: {
+    favorites() {
+      this.$store.commit('addFavorite', this.currLocation[0]);
     },
   },
 };
