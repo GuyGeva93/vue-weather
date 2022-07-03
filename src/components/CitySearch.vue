@@ -3,6 +3,8 @@
     <v-spacer></v-spacer>
     <v-col>
       <v-autocomplete
+        @keydown="isLoading = true"
+        @blur="isLoading = false"
         v-model="query"
         v-debounce="search"
         :loading="isLoading"
@@ -27,29 +29,37 @@ export default {
   },
   methods: {
     async search(query) {
+      if (!query) return;
       this.locations = await weatherService.autoComplete(query);
+      // if (typeof this.locations === 'object') {
+      //   this.items = [this.locations];
+      //   this.isLoading = false;
+      //   return;
+      // }
       this.items = this.locations.map((city) => {
         const item = {
-          text: Object.keys(city),
-          value: Object.values(city),
+          text: Object.values(city),
+          value: Object.keys(city),
         };
         return item;
       });
       this.isLoading = false;
     },
-    async getWeather() {
-      console.log('getWeather', this.query);
-      console.log('cityCode', cityCode);
-    },
   },
   watch: {
     async query(locationCode) {
-      console.log('query (watch) val - ', locationCode);
-      const weather = this.$store.dispatch('fetchWeather', {
-        locationCode,
-        locationName: this.query,
+      if (!this.query) return;
+      const location = this.items.find((item) => {
+        if (item.value === this.query) {
+          return item.text;
+        }
       });
-      this.$emit('locationSelected', weather);
+      const weather = await this.$store.dispatch('fetchWeather', {
+        locationCode,
+        locationName: location.text[0],
+      });
+      //console.log(weather);
+      this.isLoading = false;
     },
   },
 };

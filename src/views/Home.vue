@@ -14,7 +14,7 @@
       height="200px"
       class="d-flex justify-center align-center forecast-header"
     >
-      Sunny
+      {{ currLocation[0].Day.IconPhrase }}
     </v-sheet>
     <CityForecast :locationWeather="currLocation" />
   </v-container>
@@ -27,7 +27,6 @@ export default {
   name: 'Home',
   components: { CitySearch, CityForecast },
   async created() {
-    // await this.$store.dispatch('getDefaultWeather');
     await this.$store.dispatch('fetchWeather', {
       locationCode: null,
       locationName: null,
@@ -41,7 +40,6 @@ export default {
   },
   computed: {
     currLocation() {
-      console.log(this.$store.getters.currLocation);
       return this.$store.getters.currLocation;
     },
     locationName() {

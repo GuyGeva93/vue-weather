@@ -28,16 +28,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getDefaultWeather({ commit }) {
-      try {
-        const defaultWeather = await weatherService.getFiveDayForecast();
-        // commit('setLocationName', defaultWeather[0].LocationName);
-        commit('setCurrLocation', defaultWeather);
-        return defaultWeather;
-      } catch (e) {
-        console.log('Error =>', e);
-      }
-    },
     async fetchWeather({ commit }, { locationCode, locationName }) {
       try {
         if (!locationCode || !locationName) {
