@@ -6,21 +6,16 @@
     <CityForecast :locationWeather="favorites" :favorites="true" />
   </v-container>
   <v-container v-else class="text-center">
-    <v-sheet
-      height="200"
-      class="text-center header-display"
-    >
+    <v-sheet height="200" class="text-center header-display">
       No favorites yet!
     </v-sheet>
   </v-container>
 </template>
 
 <script>
-import CityCard from '@/components/CityCard.vue';
-import CityDisplay from '@/components/CityDisplay.vue';
 import CityForecast from '@/components/CityForecast.vue';
 export default {
-  components: { CityCard, CityDisplay, CityForecast },
+  components: { CityForecast },
   computed: {
     favorites() {
       return this.$store.getters.favorites;
