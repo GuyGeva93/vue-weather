@@ -1,7 +1,7 @@
 export const storageService = {
   saveToStorage,
   loadFromStorage,
-}
+};
 
 function saveToStorage(key, data) {
   var json = JSON.stringify(data);

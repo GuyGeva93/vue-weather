@@ -74,7 +74,10 @@ export default {
       this.$store.commit('removeFavorite', locationId);
     },
     async forecastLocation(locationCode, locationName) {
-      await this.$store.dispatch('fetchWeather', { locationCode, locationName });
+      await this.$store.dispatch('fetchWeather', {
+        locationCode,
+        locationName,
+      });
       this.$router.push('/');
     },
   },

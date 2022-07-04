@@ -49,7 +49,7 @@ export default {
           return item.text;
         }
       });
-      const weather = await this.$store.dispatch('fetchWeather', {
+      await this.$store.dispatch('fetchWeather', {
         locationCode,
         locationName: location.text[0],
       });

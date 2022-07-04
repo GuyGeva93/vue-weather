@@ -1,9 +1,5 @@
 <template>
   <v-toolbar-items class="hidden-xs-only">
-    <!-- <v-btn
-      @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
-      <v-icon size=28 >mdi-lightbulb-on-outline</v-icon>
-    </v-btn> -->
     <v-btn to="/" text>
       <v-icon small left>mdi-home</v-icon>
       Home
