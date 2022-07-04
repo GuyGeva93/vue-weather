@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { weatherService } from '@/services/weather-service';
 
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -19,14 +18,26 @@ export default new Vuex.Store({
   },
   getters: {
     currLocation({ currLocationWeather }) { return currLocationWeather },
-    favorites({ favorites }) { return favorites }
+    favorites({ favorites }) { return favorites },
+    isFavorite({ currLocationWeather }) { return currLocationWeather.isFavorite }
   },
   mutations: {
     setCurrLocation(state, weather) {
       state.currLocationWeather = weather;
     },
     addFavorite(state, newFavorite) {
+      newFavorite.IsFavorite = true
       state.favorites.push(newFavorite)
+    },
+    removeFavorite(state, locationId) {
+      const idx = state.favorites.findIndex(f => {
+        return f.Id === locationId
+      });
+      if (idx < 0) {
+        return 'error'
+      }
+      state.favorites[idx].isFavorite = false
+      state.favorites.splice(idx, 1);
     },
     setLocationName(state, locationName) {
       state.locationName = locationName;
@@ -39,9 +50,7 @@ export default new Vuex.Store({
       if (idx < 0) return false;
       return true;
     },
-    removeFromFavorites(state, locationId) {
-      
-    },
+
     toggleDarkMode(state) {
       state.isDarkMode = !state.isDarkMode
     }

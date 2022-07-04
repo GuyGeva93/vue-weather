@@ -29,7 +29,7 @@ async function getFiveDayForecast(locationCode = TELAVIV_CODE, locationName = 'T
       res.data.DailyForecasts[0].Id = uuidv4();
       res.data.DailyForecasts[0].LocationName = locationName;
       res.data.DailyForecasts[0].LocationCode = locationCode;
-      res.data.DailyForecasts[0].IsFavorite = 'false';
+      res.data.DailyForecasts[0].IsFavorite = false;
       storageService.saveToStorage(locationName.toLowerCase(), res.data.DailyForecasts);
       return res.data.DailyForecasts
     } catch (e) {

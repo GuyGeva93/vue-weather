@@ -74,7 +74,7 @@ export default {
       return this.$store.getters.locationName;
     },
     isFavorites() {
-      return this.$store.commit('isFavorites');
+      return this.$store.getters.isFavorite;
     },
   },
   methods: {
