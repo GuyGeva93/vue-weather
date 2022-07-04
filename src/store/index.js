@@ -8,12 +8,6 @@ export default new Vuex.Store({
   state: {
     currLocationWeather: null,
     favorites: [],
-    isDarkMode: false,
-    snackbar: {
-      show: true,
-      variant: 'success',
-      message: 'Location added to the favorites!',
-    },
   },
   getters: {
     currLocation({ currLocationWeather }) {
@@ -32,6 +26,7 @@ export default new Vuex.Store({
     },
     addFavorite(state, newFavorite) {
       newFavorite.IsFavorite = true;
+      state.currLocationWeather[0].IsFavorite = true;
       state.favorites.push(newFavorite);
     },
     removeFavorite(state, locationId) {
@@ -41,7 +36,7 @@ export default new Vuex.Store({
       if (idx < 0) {
         return 'error';
       }
-      state.favorites[idx].isFavorite = false;
+      state.currLocationWeather[0].IsFavorite = false;
       state.favorites.splice(idx, 1);
     },
     setLocationName(state, locationName) {
@@ -55,13 +50,9 @@ export default new Vuex.Store({
       if (idx < 0) return false;
       return true;
     },
-
-    toggleDarkMode(state) {
-      state.isDarkMode = !state.isDarkMode;
-    },
   },
   actions: {
-    async fetchWeather({ commit }, { locationCode, locationName }) {
+    async fetchWeather({ commit }, { locationCode, locationName, fromFavorites = false }) {
       try {
         if (!locationCode || !locationName) {
           const defWeather = await weatherService.getFiveDayForecast();
@@ -70,7 +61,8 @@ export default new Vuex.Store({
         }
         const weather = await weatherService.getFiveDayForecast(
           locationCode,
-          locationName
+          locationName,
+          fromFavorites
         );
         commit('setCurrLocation', weather);
       } catch (e) {

@@ -1,14 +1,5 @@
 <template>
   <v-container v-if="currLocation">
-    <v-snackbar
-      v-model="$store.state.snackbar.show"
-      :top="true"
-      :timeout="4000"
-      :color="$store.state.snackbar.variant"
-      :transition="'slide-y-transition'"
-    >
-      {{ $store.state.snackbar.message }}
-    </v-snackbar>
     <CitySearch />
     <v-row>
       <v-col
@@ -28,18 +19,13 @@
         class="d-flex justify-end"
         :class="{ 'justify-center': $vuetify.breakpoint.xsOnly }"
       >
-        <v-btn @click.stop="favorites" depressed v-if="isFavorites">
-          Remove From Favorites
+        <v-btn depressed v-if="currLocation[0].IsFavorite" :disabled="currLocation[0].IsFavorite">
+          Location on favorites!
         </v-btn>
-        <v-btn @click.stop="favorites" color="primary" v-else>
-          Add To Favorites
-        </v-btn>
+        <v-btn @click.stop="favorites" color="primary" v-else>Add To Favorites</v-btn>
       </v-col>
     </v-row>
-    <v-sheet
-      height="100"
-      class="d-flex justify-center align-center header-display sheet"
-    >
+    <v-sheet height="100" class="d-flex justify-center align-center header-display sheet">
       {{ currLocation[0].Day.IconPhrase }}
     </v-sheet>
 

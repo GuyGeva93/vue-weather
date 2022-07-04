@@ -25,7 +25,8 @@ async function getCurrentWeather(locationCode) {
 
 async function getFiveDayForecast(
   locationCode = TELAVIV_CODE,
-  locationName = 'Tel Aviv'
+  locationName = 'Tel Aviv',
+  fromFavorites = false
 ) {
   let locationFromStorage = storageService.loadFromStorage(
     locationName.toLowerCase()
@@ -48,6 +49,7 @@ async function getFiveDayForecast(
       console.log('Error =>', e);
     }
   }
+  locationFromStorage[0].IsFavorite = fromFavorites;
   return locationFromStorage;
 }
 async function autoComplete(query) {
