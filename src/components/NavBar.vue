@@ -4,7 +4,7 @@
       <span>G-Weather</span>
     </div>
     <v-spacer></v-spacer>
-    <span class="hidden-sm-and-up">
+    <span>
       <v-btn @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon size="28">mdi-lightbulb-on-outline</v-icon>
       </v-btn>

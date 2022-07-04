@@ -1,5 +1,14 @@
 <template>
   <v-container v-if="currLocation">
+    <v-snackbar
+      v-model="$store.state.snackbar.show"
+      :top="true"
+      :timeout="4000"
+      :color="$store.state.snackbar.variant"
+      :transition="'slide-y-transition'"
+    >
+      {{ $store.state.snackbar.message }}
+    </v-snackbar>
     <CitySearch />
     <v-row>
       <v-col
@@ -26,22 +35,14 @@
           Add To Favorites
         </v-btn>
       </v-col>
-      <!-- <v-spacer md="4"></v-spacer> -->
-      <!-- <v-col cols="12" md="4" class="d-flex justify-end"> -->
-      <!-- <v-btn @click.stop="favorites" depressed v-if="isFavorites">
-          Remove From Favorites
-        </v-btn>
-        <v-btn @click.stop="favorites" color="primary" v-else>
-          Add To Favorites
-        </v-btn> -->
-      <!-- </v-col> -->
     </v-row>
     <v-sheet
-      height="200px"
-      class="d-flex justify-center align-center forecast-header"
+      height="100"
+      class="d-flex justify-center align-center header-display sheet"
     >
       {{ currLocation[0].Day.IconPhrase }}
     </v-sheet>
+
     <CityForecast :locationWeather="currLocation" />
   </v-container>
 </template>
@@ -53,10 +54,11 @@ export default {
   name: 'Home',
   components: { CitySearch, CityForecast },
   async created() {
-    await this.$store.dispatch('fetchWeather', {
-      locationCode: null,
-      locationName: null,
-    });
+    if (!this.currLocation)
+      await this.$store.dispatch('fetchWeather', {
+        locationCode: null,
+        locationName: null,
+      });
   },
   data() {
     return {
@@ -87,7 +89,10 @@ export default {
 .city-search {
   border: 1px solid;
 }
-.forecast-header {
-  font-size: 50px;
+
+@media screen and (min-width: 960px) {
+  .sheet {
+    height: 200px !important;
+  }
 }
 </style>

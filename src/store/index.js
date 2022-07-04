@@ -9,7 +9,13 @@ export default new Vuex.Store({
   state: {
     currLocationWeather: null,
     favorites: [],
-    isDarkMode: false
+    isDarkMode: false,
+    snackbar:
+    {
+      show: true,
+      variant: 'success',
+      message: 'Location added to the favorites!',
+    }
   },
   getters: {
     currLocation({ currLocationWeather }) { return currLocationWeather },
@@ -32,6 +38,9 @@ export default new Vuex.Store({
       })
       if (idx < 0) return false;
       return true;
+    },
+    removeFromFavorites(state, locationId) {
+      
     },
     toggleDarkMode(state) {
       state.isDarkMode = !state.isDarkMode
