@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currLocationWeather: null,
-    favorites: []
+    favorites: [],
+    isDarkMode: false
   },
   getters: {
     currLocation({ currLocationWeather }) { return currLocationWeather },
@@ -31,6 +32,9 @@ export default new Vuex.Store({
       })
       if (idx < 0) return false;
       return true;
+    },
+    toggleDarkMode(state) {
+      state.isDarkMode = !state.isDarkMode
     }
   },
   actions: {

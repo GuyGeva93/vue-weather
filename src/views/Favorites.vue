@@ -1,16 +1,11 @@
 <template>
   <v-container v-if="favorites.length" class="d-flex text-center flex-column">
-    <h2 class="justify-center">My Favorites Places</h2>
-    <!-- <v-row> -->
-    <!-- <div class="cards-container" v-for="favorite in favorites" :key="favorite.EpochDate"> -->
-    <CityCard
-      :location="favorite"
-      v-for="favorite in favorites"
-      :key="favorite.EpochDate"
-    />
-    <CityDisplay />
-    <!-- </div> -->
-    <!-- </v-row> -->
+    <v-container class="d-flex flex-column">
+      <h2 class="justify-center">My Favorites Places</h2>
+      <div>
+        <CityCard />
+      </div>
+    </v-container>
   </v-container>
   <v-container v-else class="text-center">
     <h2>No favorites yet!</h2>
@@ -19,7 +14,7 @@
 
 <script>
 import CityCard from '@/components/CityCard.vue';
-import CityCard from '@/components/CityDisplay.vue';
+import CityDisplay from '@/components/CityDisplay.vue';
 export default {
   components: { CityCard, CityDisplay },
   computed: {

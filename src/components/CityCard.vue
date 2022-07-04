@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
-    <v-card outlined>
+  <div class="city-card">
+    <v-card v-for="location in favorites" :key="location.EpochDate">
       <v-card-title>{{ location.LocationName }}</v-card-title>
-      <v-card-subtitle>{{ location.Date.IconPhrase }}</v-card-subtitle>
+      <v-card-subtitle>{{ location.Day.IconPhrase }}</v-card-subtitle>
       <v-card-text>
         {{ location.Temperature.Minimum.Value }}&#8451; -
         {{ location.Temperature.Maximum.Value }}&#8451;
@@ -20,14 +20,19 @@ export default {
       require: false,
     },
   },
+  computed: {
+    favorites() {
+      return this.$store.getters.favorites;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.card {
+.city-card {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 </style>

@@ -2,11 +2,23 @@
   <v-container v-if="currLocation">
     <CitySearch />
     <v-row>
-      <v-col cols="12" md="4">
-        <h2>{{ currLocation[0].LocationName }}</h2>
+      <v-col
+        cols="12"
+        sm="6"
+        class="d-flex"
+        :class="{ 'justify-center': $vuetify.breakpoint.xsOnly }"
+      >
+        <h2>
+          <v-icon>mdi-map-marker</v-icon>
+          {{ currLocation[0].LocationName }}
+        </h2>
       </v-col>
-      <v-spacer md="4"></v-spacer>
-      <v-col cols="12" md="4" class="d-flex justify-end">
+      <v-col
+        cols="12"
+        sm="6"
+        class="d-flex justify-end"
+        :class="{ 'justify-center': $vuetify.breakpoint.xsOnly }"
+      >
         <v-btn @click.stop="favorites" depressed v-if="isFavorites">
           Remove From Favorites
         </v-btn>
@@ -14,6 +26,15 @@
           Add To Favorites
         </v-btn>
       </v-col>
+      <!-- <v-spacer md="4"></v-spacer> -->
+      <!-- <v-col cols="12" md="4" class="d-flex justify-end"> -->
+      <!-- <v-btn @click.stop="favorites" depressed v-if="isFavorites">
+          Remove From Favorites
+        </v-btn>
+        <v-btn @click.stop="favorites" color="primary" v-else>
+          Add To Favorites
+        </v-btn> -->
+      <!-- </v-col> -->
     </v-row>
     <v-sheet
       height="200px"

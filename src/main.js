@@ -3,7 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import vueDebounce from 'vue-debounce'
+import vueDebounce from 'vue-debounce';
+import './assets/style/app.scss';
 
 Vue.config.productionTip = false;
 

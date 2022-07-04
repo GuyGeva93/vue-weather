@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-spacer></v-spacer>
-    <v-col>
+    <v-col cols="12" sm="6" md="4">
       <v-autocomplete
         @keydown="isLoading = true"
         @blur="isLoading = false"
@@ -31,11 +31,6 @@ export default {
     async search(query) {
       if (!query) return;
       this.locations = await weatherService.autoComplete(query);
-      // if (typeof this.locations === 'object') {
-      //   this.items = [this.locations];
-      //   this.isLoading = false;
-      //   return;
-      // }
       this.items = this.locations.map((city) => {
         const item = {
           text: Object.values(city),
@@ -58,7 +53,6 @@ export default {
         locationCode,
         locationName: location.text[0],
       });
-      //console.log(weather);
       this.isLoading = false;
     },
   },
