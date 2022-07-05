@@ -25,7 +25,7 @@
         <v-btn @click.stop="favorites" color="primary" v-else>Add To Favorites</v-btn>
       </v-col>
     </v-row>
-    <v-sheet height="100" class="d-flex justify-center align-center header-display sheet">
+    <v-sheet height="200" class="d-flex justify-center align-center header-display text-center">
       {{ currLocation[0].Day.IconPhrase }}
     </v-sheet>
 
@@ -74,11 +74,5 @@ export default {
 <style lang="scss" scoped>
 .city-search {
   border: 1px solid;
-}
-
-@media screen and (min-width: 960px) {
-  .sheet {
-    height: 200px !important;
-  }
 }
 </style>
