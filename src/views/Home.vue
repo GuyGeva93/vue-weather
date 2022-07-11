@@ -19,13 +19,18 @@
         class="d-flex justify-end"
         :class="{ 'justify-center': $vuetify.breakpoint.xsOnly }"
       >
-        <v-btn depressed v-if="currLocation[0].IsFavorite" :disabled="currLocation[0].IsFavorite">
+        <v-btn depressed v-if="isFavorites" :disabled="isFavorites">
           Location on favorites!
         </v-btn>
-        <v-btn @click.stop="favorites" color="primary" v-else>Add To Favorites</v-btn>
+        <v-btn @click.stop="favorites" color="primary" v-else>
+          Add To Favorites
+        </v-btn>
       </v-col>
     </v-row>
-    <v-sheet height="200" class="d-flex justify-center align-center header-display text-center">
+    <v-sheet
+      height="200"
+      class="d-flex justify-center align-center header-display text-center"
+    >
       {{ currLocation[0].Day.IconPhrase }}
     </v-sheet>
 

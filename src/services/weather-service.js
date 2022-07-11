@@ -39,7 +39,9 @@ async function getFiveDayForecast(
       res.data.DailyForecasts[0].Id = uuidv4();
       res.data.DailyForecasts[0].LocationName = locationName;
       res.data.DailyForecasts[0].LocationCode = locationCode;
-      res.data.DailyForecasts[0].IsFavorite = false;
+      if (!res.data.DailyForecasts[0].IsFavorite) {
+        res.data.DailyForecasts[0].IsFavorite = false;
+      }
       storageService.saveToStorage(
         locationName.toLowerCase(),
         res.data.DailyForecasts

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { weatherService } from '@/services/weather-service';
+import { storageService } from '@/services/storage-service';
 
 Vue.use(Vuex);
 
@@ -17,7 +18,7 @@ export default new Vuex.Store({
       return favorites;
     },
     isFavorite({ currLocationWeather }) {
-      return currLocationWeather.isFavorite;
+      return currLocationWeather[0].IsFavorite;
     },
   },
   mutations: {
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     addFavorite(state, newFavorite) {
       newFavorite.IsFavorite = true;
       state.currLocationWeather[0].IsFavorite = true;
+      storageService.saveToStorage(state.currLocationWeather[0].LocationName.toLowerCase(), state.currLocationWeather);
       state.favorites.push(newFavorite);
     },
     removeFavorite(state, locationId) {
