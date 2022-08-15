@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { weatherService } from '@/services/weather-service';
-import { storageService } from '@/services/storage-service';
 
 Vue.use(Vuex);
 
@@ -17,40 +16,33 @@ export default new Vuex.Store({
     favorites({ favorites }) {
       return favorites;
     },
-    isFavorite({ currLocationWeather }) {
-      return currLocationWeather[0].IsFavorite;
-    },
   },
   mutations: {
     setCurrLocation(state, weather) {
       state.currLocationWeather = weather;
     },
-    addFavorite(state, newFavorite) {
-      newFavorite.IsFavorite = true;
-      state.currLocationWeather[0].IsFavorite = true;
-      //storageService.saveToStorage(state.currLocationWeather[0].LocationName.toLowerCase(), state.currLocationWeather);
-      state.favorites.push(newFavorite);
+    addFavorite(state, favorite) {
+      state.favorites.push(favorite);
     },
-    removeFavorite(state, locationId) {
+    removeFavorite(state, locationCode) {
       const idx = state.favorites.findIndex((f) => {
-        return f.Id === locationId;
+        return f.LocationCode === locationCode;
       });
       if (idx < 0) {
         return 'error';
       }
-      state.currLocationWeather[0].IsFavorite = false;
       state.favorites.splice(idx, 1);
+    },
+    isFavorite(state, locationCode) {
+      const idx = state.favorites.findIndex(f => {
+        return locationCode === f.LocationCode
+      })
+      if (idx < 0) {
+        return false;
+      } else return true;
     },
     setLocationName(state, locationName) {
       state.locationName = locationName;
-    },
-    isFavorites(state, locationCode) {
-      if (!state.favorites) return false;
-      const idx = state.favorites.findIndex((favorite) => {
-        return favorite.LocationCode === locationCode;
-      });
-      if (idx < 0) return false;
-      return true;
     },
   },
   actions: {
@@ -61,16 +53,20 @@ export default new Vuex.Store({
           commit('setCurrLocation', defWeather);
           return;
         }
-        const weather = await weatherService.getFiveDayForecast(
-          locationCode,
-          locationName,
-          fromFavorites
-        );
+        const weather = await weatherService.getFiveDayForecast(locationCode, locationName,);
         commit('setCurrLocation', weather);
       } catch (e) {
         console.log('Error =>', e);
       }
     },
+    async toggleFavorite({ commit }, { locationCode }) {
+      if (commit('isFavorite', locationCode)) {
+        commit('removeFavorite', locationCode);
+        return;
+      }
+      const favoriteToAdd = await weatherService.getCurrentWeather(locationCode);
+      commit('addFavorite', favoriteToAdd);
+    }
   },
-  modules: {},
+
 });

@@ -16,6 +16,7 @@ async function getCurrentWeather(locationCode) {
     const res = await axios.get(
       `${DEFAULT_URL}/currentconditions/v1/${locationCode}?apikey=${apiKey}&details=false`
     );
+    res.data.LocationCode = locationCode;
     return res.data;
   } catch (e) {
     console.log('Error =>', e);
