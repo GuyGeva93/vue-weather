@@ -17,12 +17,8 @@
       </v-card-subtitle>
       <v-card-text class="pa-2">{{ day.Temperature.Maximum.Value }}&#8451;</v-card-text>
       <v-card-actions v-if="favorites" class="flex-column justify-center gap">
-        <v-btn @click.stop="removeFromFavorites(day.Id)" color="error" class="text-center">
-          Remove
-        </v-btn>
-        <v-btn color="primary" @click="forecastLocation(day.LocationCode[0], day.LocationName)">
-          Week forecast
-        </v-btn>
+        <v-btn @click.stop="removeFromFavorites(day.Id)" color="error" class="text-center">Remove</v-btn>
+        <v-btn color="primary" @click="forecastLocation(day.LocationCode[0], day.LocationName)">Week forecast</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -52,11 +48,7 @@ export default {
       this.$store.commit('removeFavorite', locationId);
     },
     async forecastLocation(locationCode, locationName) {
-      await this.$store.dispatch('fetchWeather', {
-        locationCode,
-        locationName,
-        fromFavorites: true,
-      });
+      await this.$store.dispatch('fetchWeather', { locationCode, locationName });
       this.$router.push('/');
     },
   },

@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
   lock: false,
   listenTo: 'keyup',
-  defaultTime: '3000ms',
+  defaultTime: '500ms',
   fireOnEmpty: false,
   trim: false,
 });

@@ -1,5 +1,4 @@
 import { apiKey } from '@/assets/api-key';
-import { storageService } from './storage-service';
 import { v4 as uuidv4 } from 'uuid';
 
 const axios = require('axios');
@@ -23,36 +22,18 @@ async function getCurrentWeather(locationCode) {
   }
 }
 
-async function getFiveDayForecast(
-  locationCode = TELAVIV_CODE,
-  locationName = 'Tel Aviv',
-  fromFavorites = false
-) {
-  let locationFromStorage = storageService.loadFromStorage(
-    locationName.toLowerCase()
-  );
-  if (!locationFromStorage || !locationFromStorage.length) {
-    try {
-      const res = await axios.get(
-        `${DEFAULT_URL}/forecasts/v1/daily/5day/${locationCode}?apikey=${apiKey}&metric=true`
-      );
-      res.data.DailyForecasts[0].Id = uuidv4();
-      res.data.DailyForecasts[0].LocationName = locationName;
-      res.data.DailyForecasts[0].LocationCode = locationCode;
-      if (!res.data.DailyForecasts[0].IsFavorite) {
-        res.data.DailyForecasts[0].IsFavorite = false;
-      }
-      storageService.saveToStorage(
-        locationName.toLowerCase(),
-        res.data.DailyForecasts
-      );
-      return res.data.DailyForecasts;
-    } catch (e) {
-      console.log('Error =>', e);
-    }
+async function getFiveDayForecast(locationCode = TELAVIV_CODE, locationName = 'Tel Aviv',) {
+  try {
+    let location = await axios.get(
+      `${DEFAULT_URL}/forecasts/v1/daily/5day/${locationCode}?apikey=${apiKey}&metric=true`
+    );
+    location.data.DailyForecasts[0].Id = uuidv4();
+    location.data.DailyForecasts[0].LocationName = locationName;
+    location.data.DailyForecasts[0].LocationCode = locationCode;
+    return location.data.DailyForecasts;
+  } catch (e) {
+    console.log('Error =>', e);
   }
-  locationFromStorage[0].IsFavorite = fromFavorites;
-  return locationFromStorage;
 }
 async function autoComplete(query) {
   if (!query) return;

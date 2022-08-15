@@ -28,7 +28,7 @@ export default new Vuex.Store({
     addFavorite(state, newFavorite) {
       newFavorite.IsFavorite = true;
       state.currLocationWeather[0].IsFavorite = true;
-      storageService.saveToStorage(state.currLocationWeather[0].LocationName.toLowerCase(), state.currLocationWeather);
+      //storageService.saveToStorage(state.currLocationWeather[0].LocationName.toLowerCase(), state.currLocationWeather);
       state.favorites.push(newFavorite);
     },
     removeFavorite(state, locationId) {
@@ -54,7 +54,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async fetchWeather({ commit }, { locationCode, locationName, fromFavorites = false }) {
+    async fetchWeather({ commit }, { locationCode, locationName }) {
       try {
         if (!locationCode || !locationName) {
           const defWeather = await weatherService.getFiveDayForecast();
