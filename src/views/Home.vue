@@ -53,7 +53,10 @@ export default {
   },
   methods: {
     toggleFavorites() {
-      this.$store.dispatch('toggleFavorite', { locationCode: this.currLocation[0].LocationCode });
+      this.$store.dispatch('toggleFavorite', {
+        locationCode: this.currLocation[0].LocationCode,
+        locationName: this.currLocation[0].LocationName,
+      });
     },
   },
 };

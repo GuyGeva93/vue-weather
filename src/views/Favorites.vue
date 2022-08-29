@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import FavoriteForecast from '@/components/FavoriteForecast.vue';
+import FavoriteForecast from '@/components/FavoriteForecast.vue';
 export default {
   components: { FavoriteForecast },
   computed: {

@@ -11,12 +11,13 @@ export const weatherService = {
   autoComplete,
 };
 
-async function getCurrentWeather(locationCode) {
+async function getCurrentWeather(locationCode, locationName) {
   try {
     const res = await axios.get(
       `${DEFAULT_URL}/currentconditions/v1/${locationCode}?apikey=${apiKey}&details=false`
     );
-    res.data.LocationCode = locationCode;
+    res.data[0].LocationCode = locationCode;
+    res.data[0].LocationName = locationName;
     return res.data;
   } catch (e) {
     console.log('Error =>', e);

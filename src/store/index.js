@@ -18,7 +18,7 @@ export default new Vuex.Store({
     },
     isFavorite({ favorites, currLocationWeather }) {
       const idx = favorites.findIndex(fav => {
-        return fav.LocationCode === currLocationWeather[0].LocationCode
+        return fav[0].LocationCode === currLocationWeather[0].LocationCode
       })
       if (idx < 0) return false;
       return true;
@@ -58,12 +58,12 @@ export default new Vuex.Store({
         console.log('Error =>', e);
       }
     },
-    async toggleFavorite({ commit }, { locationCode }) {
+    async toggleFavorite({ commit }, { locationCode, locationName }) {
       if (commit('isFavorite', locationCode)) {
         commit('removeFavorite', locationCode);
         return;
       }
-      const favoriteToAdd = await weatherService.getCurrentWeather(locationCode);
+      const favoriteToAdd = await weatherService.getCurrentWeather(locationCode, locationName);
       commit('addFavorite', favoriteToAdd);
     }
   },
