@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import CityForecast from '@/components/CityForecast.vue';
+  import FavoriteForecast from '@/components/FavoriteForecast.vue';
 export default {
-  components: { CityForecast },
+  components: { FavoriteForecast },
   computed: {
     favorites() {
       return this.$store.getters.favorites;

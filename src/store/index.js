@@ -16,6 +16,13 @@ export default new Vuex.Store({
     favorites({ favorites }) {
       return favorites;
     },
+    isFavorite({ favorites, currLocationWeather }) {
+      const idx = favorites.findIndex(fav => {
+        return fav.LocationCode === currLocationWeather[0].LocationCode
+      })
+      if (idx < 0) return false;
+      return true;
+    }
   },
   mutations: {
     setCurrLocation(state, weather) {
@@ -25,21 +32,13 @@ export default new Vuex.Store({
       state.favorites.push(favorite);
     },
     removeFavorite(state, locationCode) {
-      const idx = state.favorites.findIndex((f) => {
-        return f.LocationCode === locationCode;
+      const idx = state.favorites.findIndex((fav) => {
+        return fav.LocationCode === locationCode;
       });
       if (idx < 0) {
         return 'error';
       }
       state.favorites.splice(idx, 1);
-    },
-    isFavorite(state, locationCode) {
-      const idx = state.favorites.findIndex(f => {
-        return locationCode === f.LocationCode
-      })
-      if (idx < 0) {
-        return false;
-      } else return true;
     },
     setLocationName(state, locationName) {
       state.locationName = locationName;
